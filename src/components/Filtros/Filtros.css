@@ -7,3 +7,11 @@
     width: 100%;
   }
 }
+
+@media (hover: none) {
+  .filtros .btn-outline-dark:hover {
+    color: #212529;
+    background-color: transparent;
+    border-color: #212529;
+  }
+}
