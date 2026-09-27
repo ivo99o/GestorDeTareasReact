@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import Sidebar from './components/Sidebar/Sidebar'
 import Filtros from './components/Filtros/Filtros'
+import ListaTareas from './components/Tareas/ListaTareas'
 import {
+  calcularEstado,
   calcularSiguienteId,
   cargarTareas,
   guardarTareas,
+  notificar,
   pedirPermisoNotificaciones,
 } from './utils/tareas'
 import './App.css'
@@ -15,7 +18,9 @@ function App() {
   const [sidebarAbierta, setSidebarAbierta] = useState(false)
   const [filtroCategoriaActivo, setFiltroCategoriaActivo] = useState('todos')
   const [soloPendientes, setSoloPendientes] = useState(false)
+  const [, forzarActualizacion] = useState(0)
   const siguienteId = useRef(calcularSiguienteId(tareas))
+  const estadosAnteriores = useRef(new Map())
 
   useEffect(() => {
     pedirPermisoNotificaciones()
@@ -25,7 +30,43 @@ function App() {
     guardarTareas(tareas)
   }, [tareas])
 
+  useEffect(() => {
+    function revisarCambiosDeEstado(notificarCambios) {
+      tareas.forEach((tarea) => {
+        const estado = calcularEstado(tarea.fechaObjetivo)
+        const estadoAnterior = estadosAnteriores.current.get(tarea.id)
+
+        if (estadoAnterior !== estado.texto) {
+          if (notificarCambios && estadoAnterior !== undefined) {
+            const esUrgente = estado.texto === 'AMARILLO' || estado.texto === 'NARANJA' || estado.texto === 'VENCIDA'
+            if (esUrgente) {
+              notificar(tarea, estado)
+            }
+          }
+          estadosAnteriores.current.set(tarea.id, estado.texto)
+        }
+      })
+    }
+
+    revisarCambiosDeEstado(true)
+
+    const intervalo = setInterval(() => {
+      revisarCambiosDeEstado(true)
+      forzarActualizacion((valor) => valor + 1)
+    }, 10000)
+
+    return () => clearInterval(intervalo)
+  }, [tareas])
+
   const tareaEnEdicion = tareas.find((tarea) => tarea.id === idEnEdicion) || null
+
+  const tareasAMostrar = tareas
+    .filter((tarea) => {
+      const coincideCategoria = filtroCategoriaActivo === 'todos' || tarea.categoria === filtroCategoriaActivo
+      const coincidePendiente = !soloPendientes || calcularEstado(tarea.fechaObjetivo).clave === 'pendiente'
+      return coincideCategoria && coincidePendiente
+    })
+    .sort((a, b) => a.fechaObjetivo - b.fechaObjetivo)
 
   function guardarTarea(datosTarea) {
     if (idEnEdicion === null) {
@@ -38,6 +79,19 @@ function App() {
 
     setIdEnEdicion(null)
     setSidebarAbierta(false)
+  }
+
+  function eliminarTarea(id) {
+    setTareas((actuales) => actuales.filter((tarea) => tarea.id !== id))
+
+    if (idEnEdicion === id) {
+      setIdEnEdicion(null)
+    }
+  }
+
+  function iniciarEdicion(id) {
+    setIdEnEdicion(id)
+    setSidebarAbierta(true)
   }
 
   return (
@@ -60,11 +114,7 @@ function App() {
           onAlternarPendientes={() => setSoloPendientes((actual) => !actual)}
         />
 
-        <ul>
-          {tareas.map((tarea) => (
-            <li key={tarea.id}>{tarea.titulo}</li>
-          ))}
-        </ul>
+        <ListaTareas tareas={tareasAMostrar} onEditar={iniciarEdicion} onEliminar={eliminarTarea} />
       </div>
     </div>
   )
