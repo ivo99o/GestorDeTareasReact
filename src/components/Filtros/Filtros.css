@@ -1,0 +1,9 @@
+@media (max-width: 991.98px) {
+  .filtros {
+    flex-direction: column;
+  }
+
+  .filtros .btn {
+    width: 100%;
+  }
+}

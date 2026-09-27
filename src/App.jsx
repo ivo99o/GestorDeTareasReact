@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Sidebar from './components/Sidebar/Sidebar'
+import Filtros from './components/Filtros/Filtros'
 import {
   calcularSiguienteId,
   cargarTareas,
@@ -12,6 +13,8 @@ function App() {
   const [tareas, setTareas] = useState(() => cargarTareas())
   const [idEnEdicion, setIdEnEdicion] = useState(null)
   const [sidebarAbierta, setSidebarAbierta] = useState(false)
+  const [filtroCategoriaActivo, setFiltroCategoriaActivo] = useState('todos')
+  const [soloPendientes, setSoloPendientes] = useState(false)
   const siguienteId = useRef(calcularSiguienteId(tareas))
 
   useEffect(() => {
@@ -49,6 +52,13 @@ function App() {
 
       <div className="contenido flex-grow-1 py-4 px-3 px-md-4">
         <h2 className="text-center mb-4">Tareas</h2>
+
+        <Filtros
+          filtroCategoriaActivo={filtroCategoriaActivo}
+          soloPendientes={soloPendientes}
+          onCambiarCategoria={setFiltroCategoriaActivo}
+          onAlternarPendientes={() => setSoloPendientes((actual) => !actual)}
+        />
 
         <ul>
           {tareas.map((tarea) => (
