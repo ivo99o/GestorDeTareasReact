@@ -9,11 +9,11 @@ function ListaTareas({ tareas, onEditar, onEliminar }) {
   }
 
   return (
-    <div className="lista-tareas" aria-label="Listado de tareas">
+    <section className="lista-tareas" aria-label="Listado de tareas">
       {tareas.map((tarea) => (
         <TarjetaTarea key={tarea.id} tarea={tarea} onEditar={onEditar} onEliminar={onEliminar} />
       ))}
-    </div>
+    </section>
   )
 }
 

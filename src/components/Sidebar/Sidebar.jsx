@@ -15,7 +15,7 @@ function Sidebar({ abierta, onAbrir, onCerrar, tareaEnEdicion, onGuardar }) {
         </button>
       )}
 
-      <div className={`sidebar d-flex flex-column align-items-center py-4 px-3 ${abierta ? 'abierta' : ''}`}>
+      <aside className={`sidebar d-flex flex-column align-items-center py-4 px-3 ${abierta ? 'abierta' : ''}`}>
         <div className="sidebar-titulo">
           <h2>Agregar Tarea</h2>
           <button
@@ -29,7 +29,7 @@ function Sidebar({ abierta, onAbrir, onCerrar, tareaEnEdicion, onGuardar }) {
         </div>
 
         <FormularioTarea tareaEnEdicion={tareaEnEdicion} onGuardar={onGuardar} />
-      </div>
+      </aside>
     </>
   )
 }
