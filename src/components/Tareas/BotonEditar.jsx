@@ -1,8 +1,10 @@
+import { Button } from 'react-bootstrap'
+
 function BotonEditar({ onClick }) {
   return (
-    <button type="button" className="btn-editar btn btn-sm" onClick={onClick}>
+    <Button variant={null} size="sm" className="btn-editar" onClick={onClick}>
       Editar
-    </button>
+    </Button>
   )
 }
 

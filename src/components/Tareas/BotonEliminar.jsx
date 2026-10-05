@@ -1,8 +1,10 @@
+import { Button } from 'react-bootstrap'
+
 function BotonEliminar({ onClick }) {
   return (
-    <button type="button" className="btn-eliminar btn btn-sm" onClick={onClick}>
+    <Button variant={null} size="sm" className="btn-eliminar" onClick={onClick}>
       Eliminar
-    </button>
+    </Button>
   )
 }
 

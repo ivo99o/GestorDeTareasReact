@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Button, Form } from 'react-bootstrap'
 import { NOMBRES_CATEGORIA } from '../../utils/tareas'
 
 function FormularioTarea({ tareaEnEdicion, onGuardar }) {
@@ -38,26 +39,22 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
   }
 
   return (
-    <form className="form-tarea" onSubmit={manejarEnvio}>
+    <Form className="form-tarea" onSubmit={manejarEnvio}>
       <div className="campos d-flex flex-column gap-4">
-        <div className="campo d-flex flex-column gap-1">
-          <label htmlFor="titulo" className="form-label mb-0">Título</label>
-          <input
+        <Form.Group controlId="titulo" className="campo d-flex flex-column gap-1">
+          <Form.Label className="mb-0">Título</Form.Label>
+          <Form.Control
             type="text"
-            className="form-control"
-            id="titulo"
             value={titulo}
             onChange={(evento) => setTitulo(evento.target.value)}
             placeholder="Título de la tarea"
             required
           />
-        </div>
+        </Form.Group>
 
-        <div className="campo d-flex flex-column gap-1">
-          <label htmlFor="categoria" className="form-label mb-0">Categoría</label>
-          <select
-            className="form-select"
-            id="categoria"
+        <Form.Group controlId="categoria" className="campo d-flex flex-column gap-1">
+          <Form.Label className="mb-0">Categoría</Form.Label>
+          <Form.Select
             value={categoria}
             onChange={(evento) => setCategoria(evento.target.value)}
             required
@@ -66,50 +63,44 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
             {Object.entries(NOMBRES_CATEGORIA).map(([valor, nombre]) => (
               <option key={valor} value={valor}>{nombre}</option>
             ))}
-          </select>
-        </div>
+          </Form.Select>
+        </Form.Group>
 
-        <div className="campo d-flex flex-column gap-1">
-          <label htmlFor="telefono" className="form-label mb-0">Teléfono</label>
-          <input
+        <Form.Group controlId="telefono" className="campo d-flex flex-column gap-1">
+          <Form.Label className="mb-0">Teléfono</Form.Label>
+          <Form.Control
             type="tel"
-            className="form-control"
-            id="telefono"
             value={telefono}
             onChange={(evento) => setTelefono(evento.target.value)}
             placeholder="Ej: 3815551234"
             required
           />
-        </div>
+        </Form.Group>
 
-        <div className="campo d-flex flex-column gap-1">
-          <label htmlFor="fecha" className="form-label mb-0">Fecha objetivo</label>
-          <input
+        <Form.Group controlId="fecha" className="campo d-flex flex-column gap-1">
+          <Form.Label className="mb-0">Fecha objetivo</Form.Label>
+          <Form.Control
             type="date"
-            className="form-control"
-            id="fecha"
             value={fecha}
             onChange={(evento) => setFecha(evento.target.value)}
             required
           />
-        </div>
+        </Form.Group>
 
-        <div className="campo d-flex flex-column gap-1">
-          <label htmlFor="hora" className="form-label mb-0">Hora</label>
-          <input
+        <Form.Group controlId="hora" className="campo d-flex flex-column gap-1">
+          <Form.Label className="mb-0">Hora</Form.Label>
+          <Form.Control
             type="time"
-            className="form-control"
-            id="hora"
             value={hora}
             onChange={(evento) => setHora(evento.target.value)}
           />
-        </div>
+        </Form.Group>
       </div>
 
-      <button type="submit" className="btn btn-crear fw-bold w-100 mt-4">
+      <Button type="submit" variant={null} className="btn-crear fw-bold w-100 mt-4">
         {tareaEnEdicion ? 'Guardar cambios' : 'Crear tarea'}
-      </button>
-    </form>
+      </Button>
+    </Form>
   )
 }
 

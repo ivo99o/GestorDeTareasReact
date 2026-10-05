@@ -1,3 +1,4 @@
+import { Card } from 'react-bootstrap'
 import { NOMBRES_CATEGORIA, calcularEstado } from '../../utils/tareas'
 import BotonEditar from './BotonEditar'
 import BotonEliminar from './BotonEliminar'
@@ -21,24 +22,26 @@ function TarjetaTarea({ tarea, onEditar, onEliminar }) {
   }
 
   return (
-    <div className={`tarea card shadow-sm ${estado.clase}`}>
-      <div className="card-body text-center d-flex flex-column">
-        <h3 className="tarea-titulo card-title h5 mb-2">{tarea.titulo}</h3>
+    <Card as="article" className={`tarea shadow-sm ${estado.clase}`}>
+      <Card.Body className="text-center d-flex flex-column">
+        <Card.Title as="h2" className="tarea-titulo h5 mb-2">
+          {tarea.titulo}
+        </Card.Title>
         <div className="tarea-info text-start">
-          <p className="tarea-categoria card-text small mb-1">
+          <Card.Text className="tarea-categoria small mb-1">
             🏷️ Categoría: <strong>{NOMBRES_CATEGORIA[tarea.categoria] || tarea.categoria}</strong>
-          </p>
-          <p className="tarea-fecha card-text small mb-1">📅 Fecha objetivo: {fechaLegible}</p>
-          <p className="tarea-estado card-text small mb-0">
+          </Card.Text>
+          <Card.Text className="tarea-fecha small mb-1">📅 Fecha objetivo: {fechaLegible}</Card.Text>
+          <Card.Text className="tarea-estado small mb-0">
             {estado.icono} Estado: <strong>{estado.texto}</strong>
-          </p>
+          </Card.Text>
         </div>
         <div className="tarea-acciones d-flex justify-content-center gap-2 mt-auto">
           <BotonEliminar onClick={manejarEliminar} />
           <BotonEditar onClick={() => onEditar(tarea.id)} />
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   )
 }
 
