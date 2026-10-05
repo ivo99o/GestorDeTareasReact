@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Filtros from '../components/Filtros/Filtros'
 import ListaTareas from '../components/Tareas/ListaTareas'
+import Seo from '../components/Seo/Seo'
 import { calcularEstado } from '../utils/tareas'
 import './Inicio.css'
 
@@ -42,6 +43,11 @@ function Inicio({ tareas, onGuardar, onEliminar }) {
 
   return (
     <main className="app-layout d-flex flex-column flex-lg-row min-vh-100">
+      <Seo
+        titulo="Gestor de Tareas | Organizá tus tareas por categoría y fecha"
+        descripcion="Creá, editá y filtrá tus tareas por categoría. Cada tarea cambia de color según qué tan cerca está su fecha objetivo."
+      />
+
       <Sidebar
         abierta={sidebarAbierta}
         onAbrir={() => setSidebarAbierta(true)}
