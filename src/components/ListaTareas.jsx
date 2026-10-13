@@ -1,5 +1,5 @@
 import TarjetaTarea from './TarjetaTarea'
-import './Tareas.css'
+import '../styles/Tareas.css'
 
 function ListaTareas({ tareas, onEditar, onEliminar }) {
   if (tareas.length === 0) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { NOMBRES_CATEGORIA } from '../../utils/tareas'
+import { NOMBRES_CATEGORIA } from '../utils/tareas'
 
 function FormularioTarea({ tareaEnEdicion, onGuardar }) {
   const [titulo, setTitulo] = useState('')

@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap'
-import { NOMBRES_CATEGORIA } from '../../utils/tareas'
-import './Filtros.css'
+import { NOMBRES_CATEGORIA } from '../utils/tareas'
+import '../styles/Filtros.css'
 
 function Filtros({ filtroCategoriaActivo, soloPendientes, onCambiarCategoria, onAlternarPendientes }) {
   return (

@@ -50,15 +50,20 @@ La app tiene una sola página, el Inicio, que está en la ruta `/`. Cualquier ot
 ```
 src/
 ├── components/
-│   ├── Filtros/     (botones de categoría y de pendientes)
-│   ├── Seo/         (título y descripción de la página)
-│   ├── Sidebar/     (barra lateral con el formulario)
-│   └── Tareas/      (listado, tarjeta y botones de cada tarea)
+│   ├── BotonEditar.jsx
+│   ├── BotonEliminar.jsx
+│   ├── Filtros.jsx          (botones de categoría y de pendientes)
+│   ├── FormularioTarea.jsx
+│   ├── ListaTareas.jsx
+│   ├── Seo.jsx              (título y descripción de la página)
+│   ├── Sidebar.jsx          (barra lateral con el formulario)
+│   └── TarjetaTarea.jsx
 ├── pages/
 │   └── Inicio.jsx
+├── styles/                  (un archivo CSS por componente o página)
 ├── utils/
-│   └── tareas.js    (estados, localStorage y notificaciones)
-├── App.jsx          (rutas y estado de las tareas)
+│   └── tareas.js            (estados, localStorage y notificaciones)
+├── App.jsx                  (rutas y estado de las tareas)
 └── main.jsx
 ```
 
