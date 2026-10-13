@@ -1,30 +1,53 @@
 import { useEffect, useRef, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import Inicio from './pages/Inicio'
-import {
-  calcularEstado,
-  calcularSiguienteId,
-  cargarTareas,
-  guardarTareas,
-  notificar,
-  pedirPermisoNotificaciones,
-} from './utils/tareas'
+import AvisosWhatsApp from './components/AvisosWhatsApp'
+import { calcularEstado, calcularSiguienteId, cargarTareas, guardarTareas } from './utils/tareas'
+import { enviarAvisoWhatsApp, obtenerMensajeDeError } from './utils/whatsapp'
 
 function App() {
   const [tareas, setTareas] = useState(() => cargarTareas())
   const [, forzarActualizacion] = useState(0)
+  const [avisos, setAvisos] = useState([])
   const siguienteId = useRef(calcularSiguienteId(tareas))
   const estadosAnteriores = useRef(new Map())
-
-  useEffect(() => {
-    pedirPermisoNotificaciones()
-  }, [])
+  const siguienteAviso = useRef(1)
 
   useEffect(() => {
     guardarTareas(tareas)
   }, [tareas])
 
   useEffect(() => {
+    async function avisarPorWhatsApp(tarea, estado) {
+      const id = siguienteAviso.current++
+
+      setAvisos((actuales) => [
+        ...actuales,
+        { id, fase: 'enviando', titulo: tarea.titulo, telefono: tarea.telefono, estado: estado.texto },
+      ])
+
+      try {
+        const respuesta = await enviarAvisoWhatsApp(tarea, estado)
+
+        setAvisos((actuales) =>
+          actuales.map((aviso) =>
+            aviso.id === id
+              ? { ...aviso, fase: 'enviado', destino: respuesta.destino, envio: respuesta.estado, hora: new Date() }
+              : aviso,
+          ),
+        )
+      } catch (error) {
+        setAvisos((actuales) => actuales.filter((aviso) => aviso.id !== id))
+
+        Swal.fire({
+          icon: 'error',
+          title: 'No se pudo enviar el aviso por WhatsApp',
+          text: obtenerMensajeDeError(error),
+        })
+      }
+    }
+
     function revisarCambiosDeEstado(notificarCambios) {
       tareas.forEach((tarea) => {
         const estado = calcularEstado(tarea.fechaObjetivo)
@@ -34,7 +57,7 @@ function App() {
           if (notificarCambios && estadoAnterior !== undefined) {
             const esUrgente = estado.texto === 'AMARILLO' || estado.texto === 'NARANJA' || estado.texto === 'VENCIDA'
             if (esUrgente) {
-              notificar(tarea, estado)
+              avisarPorWhatsApp(tarea, estado)
             }
           }
           estadosAnteriores.current.set(tarea.id, estado.texto)
@@ -66,14 +89,22 @@ function App() {
     setTareas((actuales) => actuales.filter((tarea) => tarea.id !== id))
   }
 
+  function cerrarAviso(id) {
+    setAvisos((actuales) => actuales.filter((aviso) => aviso.id !== id))
+  }
+
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={<Inicio tareas={tareas} onGuardar={guardarTarea} onEliminar={eliminarTarea} />}
-      />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route
+          path="/"
+          element={<Inicio tareas={tareas} onGuardar={guardarTarea} onEliminar={eliminarTarea} />}
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+
+      <AvisosWhatsApp avisos={avisos} onCerrar={cerrarAviso} />
+    </>
   )
 }
 

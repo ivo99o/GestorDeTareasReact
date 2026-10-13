@@ -1,5 +1,5 @@
 import FormularioTarea from './FormularioTarea'
-import './Sidebar.css'
+import '../styles/Sidebar.css'
 
 function Sidebar({ abierta, onAbrir, onCerrar, tareaEnEdicion, onGuardar }) {
   return (

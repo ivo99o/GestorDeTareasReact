@@ -79,23 +79,3 @@ export function calcularEstado(fechaObjetivo) {
   }
   return { clase: 'tarea--pendiente', clave: 'pendiente', texto: 'PENDIENTE', icono: '⚪' }
 }
-
-export function pedirPermisoNotificaciones() {
-  if (!('Notification' in window)) {
-    return
-  }
-
-  if (Notification.permission === 'default') {
-    Notification.requestPermission()
-  }
-}
-
-export function notificar(tarea, estado) {
-  if (!('Notification' in window) || Notification.permission !== 'granted') {
-    return
-  }
-
-  new Notification('Gestor de Tareas', {
-    body: `${estado.icono} "${tarea.titulo}" está en estado ${estado.texto}`,
-  })
-}

@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap'
-import { NOMBRES_CATEGORIA, calcularEstado } from '../../utils/tareas'
+import { NOMBRES_CATEGORIA, calcularEstado } from '../utils/tareas'
 import BotonEditar from './BotonEditar'
 import BotonEliminar from './BotonEliminar'
 

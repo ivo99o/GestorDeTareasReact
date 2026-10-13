@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Sidebar from '../components/Sidebar/Sidebar'
-import Filtros from '../components/Filtros/Filtros'
-import ListaTareas from '../components/Tareas/ListaTareas'
-import Seo from '../components/Seo/Seo'
+import Sidebar from '../components/Sidebar'
+import Filtros from '../components/Filtros'
+import ListaTareas from '../components/ListaTareas'
+import Seo from '../components/Seo'
 import { calcularEstado } from '../utils/tareas'
-import './Inicio.css'
+import '../styles/Inicio.css'
 
 function Inicio({ tareas, onGuardar, onEliminar }) {
   const [idEnEdicion, setIdEnEdicion] = useState(null)
