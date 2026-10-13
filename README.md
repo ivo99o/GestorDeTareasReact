@@ -26,7 +26,7 @@ Necesitás tener Node.js instalado. Después:
 
 ```
 git clone https://github.com/ivo99o/GestorDeTareasReact.git
-cd GestorDeTareasReact
+cd GestorDeTareasReact/web
 npm install
 npm run dev
 ```
@@ -48,24 +48,30 @@ La app tiene una sola página, el Inicio, que está en la ruta `/`. Cualquier ot
 ## Estructura de carpetas
 
 ```
-src/
-├── components/
-│   ├── BotonEditar.jsx
-│   ├── BotonEliminar.jsx
-│   ├── Filtros.jsx          (botones de categoría y de pendientes)
-│   ├── FormularioTarea.jsx
-│   ├── ListaTareas.jsx
-│   ├── Seo.jsx              (título y descripción de la página)
-│   ├── Sidebar.jsx          (barra lateral con el formulario)
-│   └── TarjetaTarea.jsx
-├── pages/
-│   └── Inicio.jsx
-├── styles/                  (un archivo CSS por componente o página)
-├── utils/
-│   └── tareas.js            (estados, localStorage y notificaciones)
-├── App.jsx                  (rutas y estado de las tareas)
-└── main.jsx
+web/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── BotonEditar.jsx
+│   │   ├── BotonEliminar.jsx
+│   │   ├── Filtros.jsx          (botones de categoría y de pendientes)
+│   │   ├── FormularioTarea.jsx
+│   │   ├── ListaTareas.jsx
+│   │   ├── Seo.jsx              (título y descripción de la página)
+│   │   ├── Sidebar.jsx          (barra lateral con el formulario)
+│   │   └── TarjetaTarea.jsx
+│   ├── pages/
+│   │   └── Inicio.jsx
+│   ├── styles/                  (un archivo CSS por componente o página)
+│   ├── utils/
+│   │   └── tareas.js            (estados, localStorage y notificaciones)
+│   ├── App.jsx                  (rutas y estado de las tareas)
+│   └── main.jsx
+├── index.html
+└── package.json
 ```
+
+El frontend está en la carpeta `web`. En la raíz quedan el `README.md` y el `vercel.json`.
 
 ## ¿Dónde usé map()?
 
