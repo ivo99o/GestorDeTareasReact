@@ -22,21 +22,25 @@ function TarjetaTarea({ tarea, onEditar, onEliminar }) {
   }
 
   return (
-    <Card as="article" className={`tarea shadow-sm ${estado.clase}`}>
+    <Card
+      as="article"
+      className={`h-100 bg-white border-0 border-start border-5 shadow ${estado.clase}`}
+      style={estado.estilo}
+    >
       <Card.Body className="text-center d-flex flex-column">
-        <Card.Title as="h2" className="tarea-titulo h5 mb-2">
+        <Card.Title as="h2" className="h5 mb-2 text-break">
           {tarea.titulo}
         </Card.Title>
-        <div className="tarea-info text-start">
-          <Card.Text className="tarea-categoria small mb-1">
+        <div className="text-start">
+          <Card.Text className="small mb-1">
             🏷️ Categoría: <strong>{NOMBRES_CATEGORIA[tarea.categoria] || tarea.categoria}</strong>
           </Card.Text>
-          <Card.Text className="tarea-fecha small mb-1">📅 Fecha objetivo: {fechaLegible}</Card.Text>
-          <Card.Text className="tarea-estado small mb-0">
+          <Card.Text className="small mb-1">📅 Fecha objetivo: {fechaLegible}</Card.Text>
+          <Card.Text className="small mb-0">
             {estado.icono} Estado: <strong>{estado.texto}</strong>
           </Card.Text>
         </div>
-        <div className="tarea-acciones d-flex justify-content-center gap-2 mt-auto">
+        <div className="d-flex justify-content-center gap-2 mt-auto pt-3">
           <BotonEliminar onClick={manejarEliminar} />
           <BotonEditar onClick={() => onEditar(tarea.id)} />
         </div>

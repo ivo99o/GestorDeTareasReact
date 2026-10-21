@@ -1,10 +1,9 @@
 import { Button } from 'react-bootstrap'
 import { NOMBRES_CATEGORIA } from '../utils/tareas'
-import '../styles/Filtros.css'
 
 function Filtros({ filtroCategoriaActivo, soloPendientes, onCambiarCategoria, onAlternarPendientes }) {
   return (
-    <div className="filtros d-flex flex-wrap justify-content-center gap-2 mb-4" role="group" aria-label="Filtrar tareas por categoría y estado">
+    <div className="d-grid gap-2 d-lg-flex flex-lg-wrap justify-content-lg-center mb-4" role="group" aria-label="Filtrar tareas por categoría y estado">
       <Button
         variant={filtroCategoriaActivo === 'todos' ? 'dark' : 'outline-dark'}
         onClick={() => onCambiarCategoria('todos')}
