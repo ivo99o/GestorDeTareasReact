@@ -42,7 +42,7 @@ function Inicio({ tareas, onGuardar, onEliminar }) {
   }
 
   return (
-    <Container as="main" fluid className="bg-light min-vh-100 p-0">
+    <Container as="main" fluid className="bg-body-secondary min-vh-100 p-0">
       <Seo
         titulo="Gestor de Tareas | Organizá tus tareas por categoría y fecha"
         descripcion="Creá, editá y filtrá tus tareas por categoría. Cada tarea cambia de color según qué tan cerca está su fecha objetivo."
