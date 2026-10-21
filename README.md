@@ -54,8 +54,8 @@ El navegador no llama directo a Twilio porque eso obligaría a poner las credenc
 ### Axios, useState y useEffect
 
 - **Axios**: en `web/src/utils/whatsapp.js`, `enviarAvisoWhatsApp` hace el `axios.post` a `VITE_API_URL` con el teléfono, el título y el estado de la tarea.
-- **useEffect**: en `App.jsx` hay un efecto con un `setInterval` que cada 10 segundos revisa si alguna tarea cambió de estado. Si cambió, llama a `enviarAvisoWhatsApp`. Al desmontarse hace `clearInterval`.
-- **useState**: en `App.jsx` el estado `avisos` guarda los avisos que se están mostrando, y se actualiza en cada paso de la petición.
+- **useEffect**: en `hooks/useAvisosWhatsApp.js` hay un efecto con un `setInterval` que cada 10 segundos revisa si alguna tarea cambió de estado. Si cambió, llama a `enviarAvisoWhatsApp`. Al desmontarse hace `clearInterval`.
+- **useState**: en `hooks/useAvisosWhatsApp.js` el estado `avisos` guarda los avisos que se están mostrando, y se actualiza en cada paso de la petición.
 
 ### Estado de carga y errores
 
@@ -105,13 +105,18 @@ web/
 │   │   ├── Seo.jsx              (título y descripción de la página)
 │   │   ├── Sidebar.jsx          (barra lateral con el formulario)
 │   │   └── TarjetaTarea.jsx
+│   ├── hooks/
+│   │   ├── useAvisosWhatsApp.js (avisos y revisión de estados cada 10 segundos)
+│   │   └── useTareas.js         (estado de las tareas y localStorage)
 │   ├── pages/
 │   │   └── Inicio.jsx
+│   ├── routes/
+│   │   └── AppRoutes.jsx        (rutas de la aplicación)
 │   ├── styles/                  (un archivo CSS por componente o página)
 │   ├── utils/
 │   │   ├── tareas.js            (estados y localStorage)
 │   │   └── whatsapp.js          (llamada a la API con Axios)
-│   ├── App.jsx                  (rutas, estado de las tareas y avisos)
+│   ├── App.jsx                  (une las rutas, las tareas y los avisos)
 │   └── main.jsx
 ├── index.html
 └── package.json
