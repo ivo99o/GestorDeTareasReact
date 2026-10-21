@@ -1,21 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import Swal from 'sweetalert2'
 import AppRoutes from './routes/AppRoutes'
+import useTareas from './hooks/useTareas'
 import AvisosWhatsApp from './components/AvisosWhatsApp'
-import { calcularEstado, calcularSiguienteId, cargarTareas, guardarTareas } from './utils/tareas'
+import { calcularEstado } from './utils/tareas'
 import { enviarAvisoWhatsApp, obtenerMensajeDeError } from './utils/whatsapp'
 
 function App() {
-  const [tareas, setTareas] = useState(() => cargarTareas())
+  const { tareas, guardarTarea, eliminarTarea } = useTareas()
   const [, forzarActualizacion] = useState(0)
   const [avisos, setAvisos] = useState([])
-  const siguienteId = useRef(calcularSiguienteId(tareas))
   const estadosAnteriores = useRef(new Map())
   const siguienteAviso = useRef(1)
-
-  useEffect(() => {
-    guardarTareas(tareas)
-  }, [tareas])
 
   useEffect(() => {
     async function avisarPorWhatsApp(tarea, estado) {
@@ -73,20 +69,6 @@ function App() {
 
     return () => clearInterval(intervalo)
   }, [tareas])
-
-  function guardarTarea(datosTarea, idEditado) {
-    if (idEditado === null) {
-      setTareas((actuales) => [...actuales, { id: siguienteId.current++, ...datosTarea }])
-    } else {
-      setTareas((actuales) =>
-        actuales.map((tarea) => (tarea.id === idEditado ? { ...tarea, ...datosTarea } : tarea)),
-      )
-    }
-  }
-
-  function eliminarTarea(id) {
-    setTareas((actuales) => actuales.filter((tarea) => tarea.id !== id))
-  }
 
   function cerrarAviso(id) {
     setAvisos((actuales) => actuales.filter((aviso) => aviso.id !== id))
