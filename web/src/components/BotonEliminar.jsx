@@ -2,7 +2,7 @@ import { Button } from 'react-bootstrap'
 
 function BotonEliminar({ onClick }) {
   return (
-    <Button variant={null} size="sm" className="btn-eliminar" onClick={onClick}>
+    <Button variant="dark" size="sm" onClick={onClick}>
       Eliminar
     </Button>
   )

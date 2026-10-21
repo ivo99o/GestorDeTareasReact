@@ -65,17 +65,31 @@ export function calcularSiguienteId(tareas) {
   return tareas.reduce((max, tarea) => Math.max(max, tarea.id + 1), 1)
 }
 
+export function formatearFechaParaInput(fecha) {
+  const anio = fecha.getFullYear()
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0')
+  const dia = String(fecha.getDate()).padStart(2, '0')
+
+  return `${anio}-${mes}-${dia}`
+}
+
 export function calcularEstado(fechaObjetivo) {
   const horasRestantes = (fechaObjetivo.getTime() - Date.now()) / (60 * 60 * 1000)
 
   if (horasRestantes < 0) {
-    return { clase: 'tarea--vencida', clave: 'vencida', texto: 'VENCIDA', icono: '🔴' }
+    return { clase: 'border-danger', clave: 'vencida', texto: 'VENCIDA', icono: '🔴' }
   }
   if (horasRestantes <= 12) {
-    return { clase: 'tarea--naranja', clave: 'naranja', texto: 'NARANJA', icono: '🟠' }
+    return {
+      clase: '',
+      estilo: { '--bs-border-color': 'var(--bs-orange)' },
+      clave: 'naranja',
+      texto: 'NARANJA',
+      icono: '🟠',
+    }
   }
   if (horasRestantes <= 24) {
-    return { clase: 'tarea--amarilla', clave: 'amarilla', texto: 'AMARILLO', icono: '🟡' }
+    return { clase: 'border-warning', clave: 'amarilla', texto: 'AMARILLO', icono: '🟡' }
   }
-  return { clase: 'tarea--pendiente', clave: 'pendiente', texto: 'PENDIENTE', icono: '⚪' }
+  return { clase: 'border-dark', clave: 'pendiente', texto: 'PENDIENTE', icono: '⚫' }
 }

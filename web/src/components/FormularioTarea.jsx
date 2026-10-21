@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { NOMBRES_CATEGORIA } from '../utils/tareas'
+import { NOMBRES_CATEGORIA, formatearFechaParaInput } from '../utils/tareas'
 
 function FormularioTarea({ tareaEnEdicion, onGuardar }) {
   const [titulo, setTitulo] = useState('')
@@ -14,7 +14,7 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
       setTitulo(tareaEnEdicion.titulo)
       setCategoria(tareaEnEdicion.categoria)
       setTelefono(tareaEnEdicion.telefono)
-      setFecha(tareaEnEdicion.fechaObjetivo.toISOString().slice(0, 10))
+      setFecha(formatearFechaParaInput(tareaEnEdicion.fechaObjetivo))
       setHora(tareaEnEdicion.fechaObjetivo.toTimeString().slice(0, 5))
     } else {
       setTitulo('')
@@ -39,10 +39,10 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
   }
 
   return (
-    <Form className="form-tarea" onSubmit={manejarEnvio}>
+    <Form onSubmit={manejarEnvio}>
       <div className="campos d-flex flex-column gap-4">
         <Form.Group controlId="titulo" className="campo d-flex flex-column gap-1">
-          <Form.Label className="mb-0">Título</Form.Label>
+          <Form.Label className="small mb-0">Título</Form.Label>
           <Form.Control
             type="text"
             value={titulo}
@@ -53,7 +53,7 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
         </Form.Group>
 
         <Form.Group controlId="categoria" className="campo d-flex flex-column gap-1">
-          <Form.Label className="mb-0">Categoría</Form.Label>
+          <Form.Label className="small mb-0">Categoría</Form.Label>
           <Form.Select
             value={categoria}
             onChange={(evento) => setCategoria(evento.target.value)}
@@ -67,7 +67,7 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
         </Form.Group>
 
         <Form.Group controlId="telefono" className="campo d-flex flex-column gap-1">
-          <Form.Label className="mb-0">Teléfono</Form.Label>
+          <Form.Label className="small mb-0">Teléfono</Form.Label>
           <Form.Control
             type="tel"
             value={telefono}
@@ -78,7 +78,7 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
         </Form.Group>
 
         <Form.Group controlId="fecha" className="campo d-flex flex-column gap-1">
-          <Form.Label className="mb-0">Fecha objetivo</Form.Label>
+          <Form.Label className="small mb-0">Fecha objetivo</Form.Label>
           <Form.Control
             type="date"
             value={fecha}
@@ -88,7 +88,7 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
         </Form.Group>
 
         <Form.Group controlId="hora" className="campo d-flex flex-column gap-1">
-          <Form.Label className="mb-0">Hora</Form.Label>
+          <Form.Label className="small mb-0">Hora</Form.Label>
           <Form.Control
             type="time"
             value={hora}
@@ -97,7 +97,7 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
         </Form.Group>
       </div>
 
-      <Button type="submit" variant={null} className="btn-crear fw-bold w-100 mt-4">
+      <Button type="submit" variant="primary" className="fw-bold w-100 mt-4">
         {tareaEnEdicion ? 'Guardar cambios' : 'Crear tarea'}
       </Button>
     </Form>

@@ -49,13 +49,13 @@ El navegador no llama directo a Twilio porque eso obligaría a poner las credenc
 
 - `VITE_API_URL` (en `web/.env`): la URL de mi función. En los componentes no hay ninguna URL escrita, se lee con `import.meta.env.VITE_API_URL` en `web/src/utils/whatsapp.js`. Como empieza con `VITE_`, queda dentro del JavaScript que se descarga, así que no es un secreto.
 - `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` y `TWILIO_WHATSAPP_FROM`: las credenciales de Twilio. Solo existen en Vercel (y en un `.env` mío en la raíz). No llevan `VITE_` para que nunca lleguen al navegador.
-- Los archivos `.env` están en el `.gitignore`, no se suben a GitHub. Subí `web/.env.example` para que se vea qué variable hace falta.
+- Los archivos `.env` están en el `.gitignore`, no se suben a GitHub. Para correr el frontend hay que crear `web/.env` con la línea `VITE_API_URL=/api/notificar`.
 
 ### Axios, useState y useEffect
 
 - **Axios**: en `web/src/utils/whatsapp.js`, `enviarAvisoWhatsApp` hace el `axios.post` a `VITE_API_URL` con el teléfono, el título y el estado de la tarea.
-- **useEffect**: en `App.jsx` hay un efecto con un `setInterval` que cada 10 segundos revisa si alguna tarea cambió de estado. Si cambió, llama a `enviarAvisoWhatsApp`. Al desmontarse hace `clearInterval`.
-- **useState**: en `App.jsx` el estado `avisos` guarda los avisos que se están mostrando, y se actualiza en cada paso de la petición.
+- **useEffect**: en `hooks/useAvisosWhatsApp.js` hay un efecto con un `setInterval` que cada 10 segundos revisa si alguna tarea cambió de estado. Si cambió, llama a `enviarAvisoWhatsApp`. Al desmontarse hace `clearInterval`.
+- **useState**: en `hooks/useAvisosWhatsApp.js` el estado `avisos` guarda los avisos que se están mostrando, y se actualiza en cada paso de la petición.
 
 ### Estado de carga y errores
 
@@ -105,20 +105,23 @@ web/
 │   │   ├── Seo.jsx              (título y descripción de la página)
 │   │   ├── Sidebar.jsx          (barra lateral con el formulario)
 │   │   └── TarjetaTarea.jsx
+│   ├── hooks/
+│   │   ├── useAvisosWhatsApp.js (avisos y revisión de estados cada 10 segundos)
+│   │   └── useTareas.js         (estado de las tareas y localStorage)
 │   ├── pages/
 │   │   └── Inicio.jsx
-│   ├── styles/                  (un archivo CSS por componente o página)
+│   ├── routes/
+│   │   └── AppRoutes.jsx        (rutas de la aplicación)
 │   ├── utils/
 │   │   ├── tareas.js            (estados y localStorage)
 │   │   └── whatsapp.js          (llamada a la API con Axios)
-│   ├── App.jsx                  (rutas, estado de las tareas y avisos)
+│   ├── App.jsx                  (une las rutas, las tareas y los avisos)
 │   └── main.jsx
-├── .env.example
 ├── index.html
 └── package.json
 ```
 
-El frontend está en la carpeta `web` y el backend en la carpeta `api`. En la raíz quedan el `README.md` y el `vercel.json`, que le indica a Vercel cómo construir `web` y deja pasar las rutas `/api` a la función.
+El frontend está en la carpeta `web` y el backend en la carpeta `api`. En la raíz quedan el `README.md` y el `vercel.json`, que le indica a Vercel cómo construir `web` y deja pasar las rutas `/api` a la función. Los estilos son solo de Bootstrap y react-bootstrap: no hay archivos CSS propios ni media queries, el diseño responsive sale de los breakpoints de Bootstrap.
 
 ## ¿Dónde usé map()?
 
