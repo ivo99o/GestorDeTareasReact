@@ -112,7 +112,6 @@ web/
 │   │   └── Inicio.jsx
 │   ├── routes/
 │   │   └── AppRoutes.jsx        (rutas de la aplicación)
-│   ├── styles/                  (un archivo CSS por componente o página)
 │   ├── utils/
 │   │   ├── tareas.js            (estados y localStorage)
 │   │   └── whatsapp.js          (llamada a la API con Axios)
@@ -122,7 +121,7 @@ web/
 └── package.json
 ```
 
-El frontend está en la carpeta `web` y el backend en la carpeta `api`. En la raíz quedan el `README.md` y el `vercel.json`, que le indica a Vercel cómo construir `web` y deja pasar las rutas `/api` a la función.
+El frontend está en la carpeta `web` y el backend en la carpeta `api`. En la raíz quedan el `README.md` y el `vercel.json`, que le indica a Vercel cómo construir `web` y deja pasar las rutas `/api` a la función. Los estilos son solo de Bootstrap y react-bootstrap: no hay archivos CSS propios ni media queries, el diseño responsive sale de los breakpoints de Bootstrap.
 
 ## ¿Dónde usé map()?
 
