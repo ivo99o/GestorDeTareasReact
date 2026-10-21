@@ -1,10 +1,10 @@
 import { useState } from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import Filtros from '../components/Filtros'
 import ListaTareas from '../components/ListaTareas'
 import Seo from '../components/Seo'
 import { calcularEstado } from '../utils/tareas'
-import '../styles/Inicio.css'
 
 function Inicio({ tareas, onGuardar, onEliminar }) {
   const [idEnEdicion, setIdEnEdicion] = useState(null)
@@ -42,33 +42,37 @@ function Inicio({ tareas, onGuardar, onEliminar }) {
   }
 
   return (
-    <main className="app-layout d-flex flex-column flex-lg-row min-vh-100">
+    <Container as="main" fluid className="bg-light min-vh-100 p-0">
       <Seo
         titulo="Gestor de Tareas | Organizá tus tareas por categoría y fecha"
         descripcion="Creá, editá y filtrá tus tareas por categoría. Cada tarea cambia de color según qué tan cerca está su fecha objetivo."
       />
 
-      <Sidebar
-        abierta={sidebarAbierta}
-        onAbrir={() => setSidebarAbierta(true)}
-        onCerrar={() => setSidebarAbierta(false)}
-        tareaEnEdicion={tareaEnEdicion}
-        onGuardar={guardarTarea}
-      />
+      <Row className="g-0 min-vh-100">
+        <Col lg={3} className="bg-dark">
+          <Sidebar
+            abierta={sidebarAbierta}
+            onAbrir={() => setSidebarAbierta(true)}
+            onCerrar={() => setSidebarAbierta(false)}
+            tareaEnEdicion={tareaEnEdicion}
+            onGuardar={guardarTarea}
+          />
+        </Col>
 
-      <section className="contenido flex-grow-1 py-4 px-3 px-md-4">
-        <h1 className="h2 text-center mb-4">Tareas</h1>
+        <Col as="section" lg={9} className="py-4 px-3 px-md-4">
+          <h1 className="h2 text-center mb-4">Tareas</h1>
 
-        <Filtros
-          filtroCategoriaActivo={filtroCategoriaActivo}
-          soloPendientes={soloPendientes}
-          onCambiarCategoria={setFiltroCategoriaActivo}
-          onAlternarPendientes={() => setSoloPendientes((actual) => !actual)}
-        />
+          <Filtros
+            filtroCategoriaActivo={filtroCategoriaActivo}
+            soloPendientes={soloPendientes}
+            onCambiarCategoria={setFiltroCategoriaActivo}
+            onAlternarPendientes={() => setSoloPendientes((actual) => !actual)}
+          />
 
-        <ListaTareas tareas={tareasAMostrar} onEditar={iniciarEdicion} onEliminar={eliminarTarea} />
-      </section>
-    </main>
+          <ListaTareas tareas={tareasAMostrar} onEditar={iniciarEdicion} onEliminar={eliminarTarea} />
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
