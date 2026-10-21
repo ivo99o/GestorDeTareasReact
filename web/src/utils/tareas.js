@@ -65,6 +65,14 @@ export function calcularSiguienteId(tareas) {
   return tareas.reduce((max, tarea) => Math.max(max, tarea.id + 1), 1)
 }
 
+export function formatearFechaParaInput(fecha) {
+  const anio = fecha.getFullYear()
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0')
+  const dia = String(fecha.getDate()).padStart(2, '0')
+
+  return `${anio}-${mes}-${dia}`
+}
+
 export function calcularEstado(fechaObjetivo) {
   const horasRestantes = (fechaObjetivo.getTime() - Date.now()) / (60 * 60 * 1000)
 

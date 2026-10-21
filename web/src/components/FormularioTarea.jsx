@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { NOMBRES_CATEGORIA } from '../utils/tareas'
+import { NOMBRES_CATEGORIA, formatearFechaParaInput } from '../utils/tareas'
 
 function FormularioTarea({ tareaEnEdicion, onGuardar }) {
   const [titulo, setTitulo] = useState('')
@@ -14,7 +14,7 @@ function FormularioTarea({ tareaEnEdicion, onGuardar }) {
       setTitulo(tareaEnEdicion.titulo)
       setCategoria(tareaEnEdicion.categoria)
       setTelefono(tareaEnEdicion.telefono)
-      setFecha(tareaEnEdicion.fechaObjetivo.toISOString().slice(0, 10))
+      setFecha(formatearFechaParaInput(tareaEnEdicion.fechaObjetivo))
       setHora(tareaEnEdicion.fechaObjetivo.toTimeString().slice(0, 5))
     } else {
       setTitulo('')
