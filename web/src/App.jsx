@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import Inicio from './pages/Inicio'
+import AppRoutes from './routes/AppRoutes'
 import AvisosWhatsApp from './components/AvisosWhatsApp'
 import { calcularEstado, calcularSiguienteId, cargarTareas, guardarTareas } from './utils/tareas'
 import { enviarAvisoWhatsApp, obtenerMensajeDeError } from './utils/whatsapp'
@@ -95,13 +94,7 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={<Inicio tareas={tareas} onGuardar={guardarTarea} onEliminar={eliminarTarea} />}
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <AppRoutes tareas={tareas} onGuardar={guardarTarea} onEliminar={eliminarTarea} />
 
       <AvisosWhatsApp avisos={avisos} onCerrar={cerrarAviso} />
     </>
