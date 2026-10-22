@@ -48,7 +48,7 @@ function Inicio({ tareas, onGuardar, onEliminar }) {
         descripcion="Creá, editá y filtrá tus tareas por categoría. Cada tarea cambia de color según qué tan cerca está su fecha objetivo."
       />
 
-      <Row className="g-0 min-vh-100">
+      <Row className="g-0 min-vh-100 align-content-start align-content-lg-stretch">
         <Col lg={3} className="bg-dark">
           <Sidebar
             abierta={sidebarAbierta}
